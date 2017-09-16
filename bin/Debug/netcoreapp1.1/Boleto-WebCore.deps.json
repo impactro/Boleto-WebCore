@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.1",
-    "signature": "8dfe6091c91ad42ad60aacb94b12e50467fa259d"
+    "signature": "15cf2cc42e7d43da78087eda98365d5488c40d82"
   },
   "compilationOptions": {
     "defines": [
@@ -30,6 +30,7 @@
           "Microsoft.Extensions.Logging.Debug": "1.1.2",
           "Microsoft.NETCore.App": "1.1.2",
           "Microsoft.VisualStudio.Web.BrowserLink": "1.1.2",
+          "StandardBoletoNet": "1.7.2",
           "ZKWeb.System.Drawing": "3.0.0"
         },
         "runtime": {
@@ -1182,6 +1183,17 @@
         },
         "compile": {
           "lib/netstandard1.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "standardboletonet/1.7.2": {
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "runtime": {
+          "lib/netstandard1.0/StandardBoletoNet.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.0/StandardBoletoNet.dll": {}
         }
       },
       "system.collections.nongeneric/4.3.0": {
@@ -3559,6 +3571,13 @@
       "sha512": "sha512-U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
       "path": "newtonsoft.json/9.0.1",
       "hashPath": "newtonsoft.json.9.0.1.nupkg.sha512"
+    },
+    "standardboletonet/1.7.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7TtZIwv6FjR6FvyMMfa3E4mmoAAu1ARINnDxxljbMWCwJHl2UqOXzF7USzZeb6MuNZGwKZtKCWx9Tu1A2knCzA==",
+      "path": "standardboletonet/1.7.2",
+      "hashPath": "standardboletonet.1.7.2.nupkg.sha512"
     },
     "system.collections.nongeneric/4.3.0": {
       "type": "package",

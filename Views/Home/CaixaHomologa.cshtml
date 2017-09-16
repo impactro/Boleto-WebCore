@@ -1,0 +1,206 @@
+﻿@{
+    ViewData["Title"] = "Exemplo de vários Boletos";
+}
+
+<style type="text/css">
+    .BolCell {
+        font-size: 7pt;
+        FONT-FAMILY: Verdana
+    }
+
+    .BolField {
+        FONT-WEIGHT: bold;
+        FONT-SIZE: 8pt;
+        FONT-FAMILY: Verdana
+    }
+    .barcode
+    {
+        display: inline-block;
+        height: 50px;
+    }
+        .barcode.bc-bf {
+            background-color: white;
+            width: 1px;
+        }
+        .barcode.bc-bl {
+            background-color: white;
+            width: 3px;
+        }
+        .barcode.bc-pf {
+            background-color: black;
+            width: 1px;
+        }
+        .barcode.bc-pl {
+            background-color: black;
+            width: 3px;
+        }
+
+</style>
+
+@foreach (var boleto in ViewBag.BoletoList)
+{
+<br/>
+
+<table cellspacing="0" cellpadding="0" border="0" style="width:640px;border-collapse:collapse;">
+    <tr>
+        <td colspan="3"><img src='/images/@(boleto.BancoNumero + ".gif")' style='width:149px;height:38px;margin:1px' /></td>
+        <td valign="bottom" style="width: 1px; background-color: black"></td>
+        <td align="center" valign="bottom" style="padding-bottom:5px;font-size:7pt;font-family:Verdana,Arial;">Banco<br/>
+            <font style='font-size: 11pt; font-weight: bold; font-family: Arial;'>@boleto.BancoCodigo</font></td>
+        <td valign="bottom" style="width:1px; background-color:black"></td>
+        <td class="BolField" align="right" valign="bottom" colspan="8" style="width:400px;white-space:nowrap;padding-bottom:5px;">Recibo do Pagador</td>
+    </tr>
+</table>
+<table cellspacing="0" cellpadding="1" rules="all" bordercolordark="#000000" bordercolorlight="#000000" border="1" style="border-color:Black;border-width:1px;border-style:Solid;width:640px;border-collapse:collapse;">
+    <tr>
+        <td class="BolCell" colspan="4" style="width:350px;">Beneficiário:<br/>
+            <font class=BolField>@boleto.Cedente - @boleto.CedenteDocumento</font><br/>
+            <font class=BolCell>Endereço: </font>
+            <font class=BolField>@boleto.CedenteEndereco</font></td>
+        <td class="BolCell" style="width:160px;white-space:nowrap;">Agência/Código do Beneficiário<br/>
+            <div align=center class=BolField>@boleto.AgenciaConta</div></td>
+        <td class="BolCell" style="background-color:LightGrey;width:130px;">Vencimento<br/>
+            <div align='right' class='BolField'>@boleto.DataVencimento.ToString("dd/MM/yyyy")</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" colspan="4">Pagador<br/>
+            <font class=BolField>@boleto.Sacado</font></td>
+        <td class="BolCell">Nº Documento<br/>
+            <div align=center class=BolField>@boleto.NumeroDocumento</div></td>
+        <td class="BolCell" style="white-space:nowrap;">Nosso Número<br/>
+            <div align=right class=BolField>@boleto.NossoNumeroExibicao</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" style="background-color:LightGrey;">Espécie Moeda<br/>
+            <div class=BolField align="center">R$</div></td>
+        <td class="BolCell">Parcela<br/>
+            <div align=center class=BolField>@((boleto.ParcelaNumero == 0 ? "" : boleto.ParcelaNumero.ToString()) +
+(boleto.ParcelaTotal == 0 ? "" : (" / " + boleto.ParcelaTotal.ToString())))&nbsp;</div></td>
+        <td class="BolCell">Qtde<br/>
+            <div align=center class=BolField>@(boleto.Quantidade == 0 ? "" : boleto.Quantidade.ToString())&nbsp;</div></td>
+        <td class="BolCell">(x)Valor<br/>
+            <div align=right class=BolField>@(boleto.ValorUnitario == 0 ? "" : boleto.ValorUnitario.ToString())&nbsp;</div></td>
+        <td class="BolCell">(-)Descontos/Abatim.<br/>
+            <div align=right class=BolField>&nbsp;</div></td>
+        <td class="BolCell" style="background-color:LightGrey;">(=)Valor Documento<br/>
+            <div align=right class=BolField>@(String.Format("{0:C}", boleto.ValorDocumento))</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" valign="bottom" colspan="4">Demonstrativo</td>
+        <td class="BolCell">(+)Outros Acréscimos<br/>
+            <div align=right class=BolField>&nbsp;</div></td>
+        <td class="BolCell">(=)Valor Cobrado<br/>
+            <div align=right class=BolField>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" valign="top" colspan="6" style="height:50px;">
+        <div class=BolField>@boleto.Demonstrativo.Replace("\r\n", "<br/>")</div></td>
+    </tr>
+</table>
+<img src='/images/corte.gif' class='BoletoWebCorte'><br/>
+<br/>
+<table cellspacing="0" cellpadding="0" border="0" style="width:640px;border-collapse:collapse;">
+    <tr>
+        <td colspan="3"><img src='/images/@(boleto.BancoNumero + ".gif")' style='width:149px;height:38px;margin:1px' /></td>
+        <td valign="bottom" style="width: 1px; background-color: black"></td>
+        <td align="center" valign="bottom" style="padding-bottom:5px;font-size:7pt;font-family:Verdana,Arial;">Banco<br/>
+            <font style='font-size: 11pt; font-weight: bold; font-family: Arial;'>@boleto.BancoCodigo</font></td>
+        <td valign="bottom" style="width: 1px; background-color: black"></td>
+        <td class="BolField" align="right" valign="bottom" colspan="8" style="width:400px;white-space:nowrap;padding-bottom:5px;">
+            <font style='font-size: 11pt; font-weight: bold; font-family: Arial;'>@boleto.LinhaDigitavel</font></td>
+    </tr>
+</table>
+<table cellspacing="0" cellpadding="1" rules="all" bordercolordark="#000000" bordercolorlight="#000000" border="1" style="border-color:Black;border-width:1px;border-style:Solid;width:640px;border-collapse:collapse;">
+    <tr>
+        <td class="BolCell" colspan="6" style="width:480px;">Local de pagamento<br/>
+            <font class=BolField>@boleto.LocalPagamento</font></td>
+        <td class="BolCell" style="background-color:LightGrey;width:130px;">Vencimento<br/>
+            <div align='right' class='BolField'>@boleto.DataVencimento.ToString("dd/MM/yyyy")</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" colspan="6">Beneficiário:<br/>
+            <font class=BolField>@boleto.Cedente - @boleto.CedenteDocumento</font><br />
+            <font class=BolCell>Endereço: </font>
+            <font class=BolField>@boleto.CedenteEndereco</font></td>
+        <td class="BolCell" style="white-space:nowrap;">Agência/Código do Beneficiário<br/>
+            <div align=right class=BolField>@boleto.CedenteDocumento</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" style="width:120px;">Data Documento<br/>
+            <div class=BolField align="center">@boleto.DataDocumento.ToString("dd/MM/yyyy")&nbsp;</div></td>
+        <td class="BolCell" colspan="2" style="width:120px;">Nº Documento<br/>
+            <div class=BolField align="center">@boleto.NumeroDocumento</div></td>
+        <td class="BolCell">Espécie Doc.<br/>
+            <div class=BolField align="center">@boleto.Especie&nbsp;</div></td>
+        <td class="BolCell">Aceite<br/>
+            <div class=BolField align="center">@boleto.Aceite&nbsp;</div></td>
+        <td class="BolCell" style="width:110px;">Data Processamento<br/>
+            <div class=BolField align="center">@(boleto.DataProcessamento == DateTime.MinValue ? "" : boleto.DataProcessamento.ToString("dd/MM/yyyy"))&nbsp;</div></td>
+        <td class="BolCell" style="white-space:nowrap;">Nosso Número<br/>
+            <div align=right class=BolField>@boleto.NossoNumeroExibicao</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" colspan="2">Carteira<br/>
+            <div class=BolField align="center">&nbsp;@boleto.CarteiraExibicao</div></td>
+        <td class="BolCell" style="background-color:LightGrey;">Espécie<br/>
+            <div class=BolField align="center">R$</div></td>
+        <td class="BolCell">Parcela<br/>
+            <div align=center class=BolField>&nbsp;@((boleto.ParcelaNumero == 0 ? "" : boleto.ParcelaNumero.ToString()) +
+(boleto.ParcelaTotal == 0 ? "" : (" / " + boleto.ParcelaTotal.ToString())))</div></td>
+        <td class="BolCell">Qtde<br/>
+            <div class=BolField align="center">@(boleto.Quantidade == 0 ? "" : boleto.Quantidade.ToString())&nbsp;</div></td>
+        <td class="BolCell">
+            (x)Valor<br />
+            <div align=right class=BolField>@(boleto.ValorUnitario == 0 ? "" : boleto.ValorUnitario.ToString())&nbsp;</div></td>
+        <td class="BolCell" style="background-color:LightGrey;">(=)Valor Documento<br/>
+            <div align=right class=BolField>&nbsp;@(String.Format("{0:C}", boleto.ValorDocumento))</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" valign="top" colspan="6" rowspan="5">Instruções (Texto de responsabilidade do beneficiário)<br/>
+            <font class=BolField>
+                @boleto.Instrucoes.Replace("\r\n", "<br/>")
+            </font></td>
+        <td class="BolCell">(-)Descontos/Abatim.<br/>
+            <div align=right class=BolField>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell">(-)Outras Deduções<br/>
+            <div align=right class=BolField>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell">(+)Mora/Multa<br/>
+            <div align=right class=BolField>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell">(+)Outros Acréscimos<br/>
+            <div align=right class=BolField>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell">(=)Valor Cobrado<br/>
+        <div align=right class=BolField>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td class="BolCell" valign="top" colspan="7" style="height:70px;">Pagador<br/>
+            <font class=BolField>@boleto.Sacado @boleto.SacadoDocumento <br/>
+                @boleto.SacadoEndereco <br/>
+                @boleto.Bairro - @boleto.Cidade <br/>
+                CEP: @boleto.Cep - @boleto.UF</font></td>
+    </tr>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" style="width:640px;border-collapse:collapse;">
+    <tr>
+        <td class="BolCell"></td>
+        <td class="BolCell" align="right">Autenticação Mecânica - FICHA DE COMPENSAÇÃO</td>
+    </tr>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" style="width:640px;border-collapse:collapse;">
+    <tr>
+        <td>
+            <img src="/home/BarCodeImage?id=@boleto.CodigoBarras" />
+            @*@Impactro.Cobranca.CobUtil.BarCodeHTML(boleto.CodigoBarras)*@
+        </td>
+    </tr>
+</table>
+
+<div style='page-break-after: always'><br /></div>
+}
